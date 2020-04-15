@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:textStyle="bold"
+        android:textColor="#000DFF"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="25dp"
+        android:id="@+id/txtTitlePlaylist"
+        android:text="Top Những Ca Khúc Hay Nhất"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ListView
+        android:id="@+id/lsvPlaylist"
+        android:layout_below="@+id/txtTitlePlaylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/iconmoreplaylist"
+        android:id="@+id/txtViewPlaylist"
+        android:textColor="#F02"
+        android:background="#6EB1E6"
+        android:padding="10dp"
+        android:layout_margin="8dp"
+        android:text="Xem Thêm PlayLists"
+        android:layout_below="@+id/lsvPlaylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

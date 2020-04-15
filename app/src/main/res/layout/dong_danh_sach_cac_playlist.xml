@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_margin="2dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/framlayoutDongDSCacPL"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/imgDSCacPlayList"
+            android:src="@drawable/iconloved"
+            android:layout_width="250dp"
+            android:layout_height="150dp"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/imgIconDSCacPlayList"-->
+<!--            android:scaleType="fitXY"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:layout_alignBottom="@id/imgDSCacPlayList"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"/>-->
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtTenDSCacPLayList"
+        android:gravity="center"
+        android:maxWidth="200dp"
+        android:lines="2"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Tên Danh Sách PlayList nè a b"
+        android:textStyle="bold"
+        android:textColor="#0040FF"
+        android:textSize="22sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    
+    <TextView
+
+        android:layout_gravity="center"
+        android:maxWidth="200dp"
+        android:ellipsize="end"
+        android:text="Various Artists"
+        android:textStyle="bold"
+        android:textColor="#E4081A"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

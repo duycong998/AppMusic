@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/imgBGBanner"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+    </ImageView>
+
+    <View
+        android:background="@drawable/custom_background_banner"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+    </View>
+    
+    <RelativeLayout
+        android:id="@+id/myRelative1"
+        android:layout_alignBottom="@+id/imgBGBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgBanner"
+            android:layout_margin="10dp"
+            android:padding="2dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"/>
+
+        <TextView
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="#F02"
+            android:text="congdeptrai"
+            android:id="@+id/txtBannerSong"
+            android:layout_toRightOf="@id/imgBanner"
+            android:layout_alignTop="@+id/imgBanner"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/imgBanner"
+            android:layout_below="@id/txtBannerSong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+            <TextView
+                android:id="@+id/txtNoiDungBanner"
+                android:textStyle="bold"
+                android:textColor="#CA7E0F"
+                android:text="cong sieu dep trai"
+                android:maxLines="2"
+                android:layout_marginRight="40dp"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
