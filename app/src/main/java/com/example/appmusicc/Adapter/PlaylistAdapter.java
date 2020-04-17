@@ -22,7 +22,7 @@ public class PlaylistAdapter extends ArrayAdapter<PlayList> {
         super(context, resource, objects);
     }
     class ViewHolder{
-        TextView txtTenPlaylist;
+        TextView txtNamePlaylist;
         ImageView imgBG,imgView;
     }
 
@@ -32,10 +32,10 @@ public class PlaylistAdapter extends ArrayAdapter<PlayList> {
         ViewHolder viewHolder = null;
         if(convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.dong_playlist,null);
+            convertView = inflater.inflate(R.layout.item_playlist,null);
 
             viewHolder = new ViewHolder();
-            viewHolder.txtTenPlaylist = convertView.findViewById(R.id.txtPlaylist);
+            viewHolder.txtNamePlaylist = convertView.findViewById(R.id.txtPlaylist);
             viewHolder.imgBG          = convertView.findViewById(R.id.imgBGPlaylist);
             viewHolder.imgView        = convertView.findViewById(R.id.imgViewPlaylist);
             convertView.setTag(viewHolder);
@@ -43,9 +43,9 @@ public class PlaylistAdapter extends ArrayAdapter<PlayList> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         PlayList playList = getItem(position);
-        Picasso.with(getContext()).load(playList.getHinhNen()).into(viewHolder.imgBG);
-        Picasso.with(getContext()).load(playList.getHinhIcon()).into(viewHolder.imgView);
-        viewHolder.txtTenPlaylist.setText(playList.getTen());
+        Picasso.with(getContext()).load(playList.getMPicture()).into(viewHolder.imgBG);
+        Picasso.with(getContext()).load(playList.getIconPicture()).into(viewHolder.imgView);
+        viewHolder.txtNamePlaylist.setText(playList.getMName());
         return convertView;
     }
 }

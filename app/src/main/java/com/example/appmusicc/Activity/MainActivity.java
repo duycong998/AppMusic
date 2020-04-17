@@ -4,11 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.appmusicc.Adapter.MainViewPagerAdapter;
-import com.example.appmusicc.Fragment.Fragment_Tim_Kiem;
-import com.example.appmusicc.Fragment.Fragment_Trang_Chu;
+import com.example.appmusicc.Fragment.SearchFragment;
+import com.example.appmusicc.Fragment.HomeFragment;
 import com.example.appmusicc.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -25,12 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
-        mainViewPagerAdapter.addFragment(new Fragment_Trang_Chu(),"Trang chu");
-        mainViewPagerAdapter.addFragment(new Fragment_Tim_Kiem(),"tim kiem");
+        mainViewPagerAdapter.addFragment(new HomeFragment(),"Trang Chủ");
+        mainViewPagerAdapter.addFragment(new SearchFragment(),"Tìm Kiếm");
         viewPager.setAdapter(mainViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.icontrangchu);
         tabLayout.getTabAt(1).setIcon(R.drawable.iconsearch);
+
     }
 
     private void initView() {

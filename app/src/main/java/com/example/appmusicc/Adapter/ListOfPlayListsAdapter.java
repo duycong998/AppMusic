@@ -12,57 +12,57 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmusicc.Activity.ListSongActivity;
-import com.example.appmusicc.Model.Album;
+import com.example.appmusicc.Model.PlayList;
 import com.example.appmusicc.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
+public class ListOfPlayListsAdapter extends RecyclerView.Adapter<ListOfPlayListsAdapter.ViewHolder>{
     Context context;
-    ArrayList<Album> arrayAlbum;
+    ArrayList<PlayList> arrayPlayList;
 
-    public AlbumAdapter(Context context, ArrayList<Album> arrayAlbum) {
+    public ListOfPlayListsAdapter(Context context, ArrayList<PlayList> arrayPlayList) {
         this.context = context;
-        this.arrayAlbum = arrayAlbum;
+        this.arrayPlayList = arrayPlayList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_album,parent,false);
+        View view = inflater.inflate(R.layout.item_listofplaylists,parent,false);
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Album  album = arrayAlbum.get(position);
-        holder.txtNameSinger.setText(album.getNameSinger());
-        holder.txtNameAlbum.setText(album.getNameAlbum());
-        Picasso.with(context).load(album.getPictureAlbum()).into(holder.imgPictureAlbum);
-
+        PlayList playList = arrayPlayList.get(position);
+        holder.txtNameDSCPL.setText(playList.getMName());
+        Picasso.with(context).load(playList.getMPicture()).into(holder.imgHinh);
+      //  Picasso.with(context).load(playList.getHinhIcon()).into(holder.imgIcon);
     }
 
     @Override
     public int getItemCount() {
-        return arrayAlbum.size();
+        return arrayPlayList.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView imgPictureAlbum;
-        TextView txtNameAlbum, txtNameSinger;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView imgHinh,imgIcon;
+        TextView txtNameDSCPL;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgPictureAlbum = itemView.findViewById(R.id.imgPictureAlbum);
-            txtNameAlbum = itemView.findViewById(R.id.txtNameAlbum);
-            txtNameSinger = itemView.findViewById(R.id.txtNameAlbumSinger);
+            imgHinh     = itemView.findViewById(R.id.imgListOfPlayList);
+            txtNameDSCPL = itemView.findViewById(R.id.txtNameOfPLayList);
+            //imgIcon     = itemView.findViewById(R.id.imgIconDSCacPlayList);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ListSongActivity.class);
-                    intent.putExtra("album",arrayAlbum.get(getPosition()));
+                    intent.putExtra("itemplaylist",arrayPlayList.get(getPosition()));
                     context.startActivity(intent);
                 }
             });

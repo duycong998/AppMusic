@@ -7,49 +7,48 @@ import java.io.Serializable;
 
 public class Album implements Serializable {
 
-@SerializedName("idAlbum")
-@Expose
-private String idAlbum;
-@SerializedName("tenAlbum")
-@Expose
-private String tenAlbum;
-@SerializedName("tenCaSi")
-@Expose
-private String tenCaSi;
-@SerializedName("hinhAlbum")
-@Expose
-private String hinhAlbum;
+    @SerializedName("idAlbum")
+    @Expose
+    private String idAlbum;
+    @SerializedName("nameAlbum")
+    @Expose
+    private String nameAlbum;
+    @SerializedName("nameSinger")
+    @Expose
+    private String nameSinger;
+    @SerializedName("pictureAlbum")
+    @Expose
+    private String pictureAlbum;
 
-public String getIdAlbum() {
-return idAlbum;
-}
+    public String getIdAlbum() {
+        return idAlbum;
+    }
 
-public void setIdAlbum(String idAlbum) {
-this.idAlbum = idAlbum;
-}
+    public void setIdAlbum(String idAlbum) {
+        this.idAlbum = idAlbum;
+    }
 
-public String getTenAlbum() {
-return tenAlbum;
-}
+    public String getNameAlbum() {
+        return nameAlbum;
+    }
 
-public void setTenAlbum(String tenAlbum) {
-this.tenAlbum = tenAlbum;
-}
+    public void setNameAlbum(String nameAlbum) {
+        this.nameAlbum = nameAlbum;
+    }
 
-public String getTenCaSi() {
-return tenCaSi;
-}
+    public String getNameSinger() {
+        return nameSinger;
+    }
 
-public void setTenCaSi(String tenCaSi) {
-this.tenCaSi = tenCaSi;
-}
+    public void setNameSinger(String nameSinger) {
+        this.nameSinger = nameSinger;
+    }
 
-public String getHinhAlbum() {
-return hinhAlbum;
-}
+    public String getPictureAlbum() {
+        return pictureAlbum;
+    }
 
-public void setHinhAlbum(String hinhAlbum) {
-this.hinhAlbum = hinhAlbum;
-}
-
+    public void setPictureAlbum(String pictureAlbum) {
+        this.pictureAlbum = pictureAlbum;
+    }
 }

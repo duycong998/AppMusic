@@ -12,57 +12,55 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmusicc.Activity.ListSongActivity;
-import com.example.appmusicc.Model.Album;
+import com.example.appmusicc.Model.Genre;
 import com.example.appmusicc.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
+public class ListGenreOfTopicAdapter extends RecyclerView.Adapter<ListGenreOfTopicAdapter.ViewHolder> {
     Context context;
-    ArrayList<Album> arrayAlbum;
+    ArrayList<Genre> arrayGenreOfTopic;
 
-    public AlbumAdapter(Context context, ArrayList<Album> arrayAlbum) {
+    public ListGenreOfTopicAdapter(Context context, ArrayList<Genre> arrayGenreOfTopic) {
         this.context = context;
-        this.arrayAlbum = arrayAlbum;
+        this.arrayGenreOfTopic = arrayGenreOfTopic;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_album,parent,false);
+        View view = inflater.inflate(R.layout.item_listgenreoftopic,parent,false);
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Album  album = arrayAlbum.get(position);
-        holder.txtNameSinger.setText(album.getNameSinger());
-        holder.txtNameAlbum.setText(album.getNameAlbum());
-        Picasso.with(context).load(album.getPictureAlbum()).into(holder.imgPictureAlbum);
-
+        Genre genre = arrayGenreOfTopic.get(position);
+        holder.txtGenre.setText(genre.getNameGenre());
+        Picasso.with(context).load(genre.getPictureGenre()).into(holder.imgPicture);
     }
 
     @Override
     public int getItemCount() {
-        return arrayAlbum.size();
+        return arrayGenreOfTopic.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView imgPictureAlbum;
-        TextView txtNameAlbum, txtNameSinger;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView imgPicture;
+        TextView txtGenre;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgPictureAlbum = itemView.findViewById(R.id.imgPictureAlbum);
-            txtNameAlbum = itemView.findViewById(R.id.txtNameAlbum);
-            txtNameSinger = itemView.findViewById(R.id.txtNameAlbumSinger);
+            imgPicture = itemView.findViewById(R.id.imgGenreOfTopic);
+            txtGenre = itemView.findViewById(R.id.txtNameGenreOfTopic);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ListSongActivity.class);
-                    intent.putExtra("album",arrayAlbum.get(getPosition()));
+                    intent.putExtra("idgenre", arrayGenreOfTopic.get(getPosition()));
                     context.startActivity(intent);
                 }
             });

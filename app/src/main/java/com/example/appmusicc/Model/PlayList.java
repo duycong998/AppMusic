@@ -7,49 +7,49 @@ import java.io.Serializable;
 
 public class PlayList implements Serializable {
 
-@SerializedName("idPlayList")
-@Expose
-private String idPlayList;
-@SerializedName("ten")
-@Expose
-private String ten;
-@SerializedName("hinhNen")
-@Expose
-private String hinhNen;
-@SerializedName("hinhIcon")
-@Expose
-private String hinhIcon;
+    @SerializedName("idPlayList")
+    @Expose
+    private String idPlayList;
+    @SerializedName("mName")
+    @Expose
+    private String mName;
+    @SerializedName("mPicture")
+    @Expose
+    private String mPicture;
+    @SerializedName("iconPicture")
+    @Expose
+    private String iconPicture;
 
-public String getIdPlayList() {
-return idPlayList;
-}
+    public String getIdPlayList() {
+        return idPlayList;
+    }
 
-public void setIdPlayList(String idPlayList) {
-this.idPlayList = idPlayList;
-}
+    public void setIdPlayList(String idPlayList) {
+        this.idPlayList = idPlayList;
+    }
 
-public String getTen() {
-return ten;
-}
+    public String getMName() {
+        return mName;
+    }
 
-public void setTen(String ten) {
-this.ten = ten;
-}
+    public void setMName(String mName) {
+        this.mName = mName;
+    }
 
-public String getHinhNen() {
-return hinhNen;
-}
+    public String getMPicture() {
+        return mPicture;
+    }
 
-public void setHinhNen(String hinhNen) {
-this.hinhNen = hinhNen;
-}
+    public void setMPicture(String mPicture) {
+        this.mPicture = mPicture;
+    }
 
-public String getHinhIcon() {
-return hinhIcon;
-}
+    public String getIconPicture() {
+        return iconPicture;
+    }
 
-public void setHinhIcon(String hinhIcon) {
-this.hinhIcon = hinhIcon;
-}
+    public void setIconPicture(String iconPicture) {
+        this.iconPicture = iconPicture;
+    }
 
 }

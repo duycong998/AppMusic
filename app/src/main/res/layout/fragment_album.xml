@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/txtAlbumXemthem"
+            android:id="@+id/txtAlbumSeeAll"
             android:textSize="18sp"
             android:textStyle="normal"
             android:layout_alignParentRight="true"

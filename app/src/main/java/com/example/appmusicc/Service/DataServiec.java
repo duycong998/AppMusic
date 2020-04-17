@@ -1,12 +1,12 @@
 package com.example.appmusicc.Service;
 
 import com.example.appmusicc.Model.Album;
-import com.example.appmusicc.Model.BaiHat;
-import com.example.appmusicc.Model.ChuDe;
+import com.example.appmusicc.Model.Song;
+import com.example.appmusicc.Model.Topic;
 import com.example.appmusicc.Model.PlayList;
-import com.example.appmusicc.Model.QuangCao;
-import com.example.appmusicc.Model.TheLoai;
-import com.example.appmusicc.Model.TheLoaiTrongNgay;
+import com.example.appmusicc.Model.Advertisement;
+import com.example.appmusicc.Model.Genre;
+import com.example.appmusicc.Model.DailyGenre;
 
 import java.util.List;
 
@@ -18,56 +18,56 @@ import retrofit2.http.POST;
 
 public interface DataServiec {
     @GET("songbanner.php")
-    Call<List<QuangCao>> getDataBanner();
+    Call<List<Advertisement>> getDataBanner();
 
     @GET("playlistforcurrentday.php")
     Call<List<PlayList>> getDataPlayListDay();
 
     @GET("chudevatheloaingay.php")
-    Call<TheLoaiTrongNgay> getChuDeTheLoai();
+    Call<DailyGenre> getTopicGenre();
 
     @GET("album.php")
     Call<List<Album>> getAlbum();
 
     @GET("baihatyeuthich.php")
-    Call<List<BaiHat>> getBaiHatYeuThich();
+    Call<List<Song>> getLoveSong();
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<BaiHat>> getDanhSachBHQuangCao(@Field("idQuangCao") String idQuangCao);
+    Call<List<Song>> getListSongAdvertisement(@Field("idAdvertisement") String idAdvertisement);
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<BaiHat>> getDanhSachBHPlayList(@Field("idPlayList") String idPlayList);
+    Call<List<Song>> getListSongPlayList(@Field("idPlayList") String idPlayList);
 
     @GET("danhsachcacplaylist.php")
-    Call<List<PlayList>>  getDanhSachCacPlayList();
+    Call<List<PlayList>>  getListAllPlayList();
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<BaiHat>> getDanhSachBHTheLoai(@Field("idTheLoai") String idTheLoai);
+    Call<List<Song>> getListSongOfGenre(@Field("idGenre") String idGenre);
 
     @GET("allchude.php")
-    Call<List<ChuDe>> getAllChuDe();
+    Call<List<Topic>> getAllTopic();
 
     @FormUrlEncoded
     @POST("danhsachtheloaitheochude.php")
-    Call<List<TheLoai>> getTheLoaiTheoChuDe(@Field("idChuDe") String idChuDe);
+    Call<List<Genre>> getGenreOfTopic(@Field("idTopic") String idTopic);
 
     @GET("allalbum.php")
     Call<List<Album>>  getAllAlbum();
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<BaiHat>> getDanhSachBHTheoAlbum(@Field("idAlbum") String idAlbum);
+    Call<List<Song>> getDanhSachBHTheoAlbum(@Field("idAlbum") String idAlbum);
 
     @FormUrlEncoded
     @POST("updateluotthich.php")
-    Call<String> updateLuotThich(@Field("luotThich") String luotThich
-                                ,@Field("idBaiHat") String idBaiHat);
+    Call<String> updateLike(@Field("mLike") String mLike
+                                ,@Field("idSong") String idSong);
 
     @FormUrlEncoded
     @POST("searchbaihat.php")
-    Call<List<BaiHat>> getSearchBaiHat(@Field("tukhoa") String tukhoa);
+    Call<List<Song>> getSearchSong(@Field("mKey") String mKey);
 
 }
