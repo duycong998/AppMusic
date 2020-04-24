@@ -9,6 +9,7 @@ import com.example.appmusicc.Adapter.MainViewPagerAdapter;
 import com.example.appmusicc.Fragment.SearchFragment;
 import com.example.appmusicc.Fragment.HomeFragment;
 import com.example.appmusicc.R;
+import com.example.appmusicc.Service.DataServiec;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         init();
+
     }
 
     private void init() {
