@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import com.example.appmusicc.R;
 
 public class HomeFragment extends Fragment {
+    private static HomeFragment instance = null;
+
     View view;
     @Nullable
     @Override
@@ -19,4 +21,12 @@ public class HomeFragment extends Fragment {
        view = inflater.inflate(R.layout.fragment_home,container,false);
         return view;
     }
+
+    public static HomeFragment getInstance() {
+        if (instance == null) {
+            instance = new HomeFragment();
+        }
+        return instance;
+    }
+    private HomeFragment() {}
 }

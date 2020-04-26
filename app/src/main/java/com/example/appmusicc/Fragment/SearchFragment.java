@@ -32,6 +32,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchFragment extends Fragment {
+    private static  SearchFragment instance = null;
+
     Toolbar toolbar;
     RecyclerView rcViewSearchBH;
     TextView txtNoData;
@@ -104,4 +106,12 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
+    public static SearchFragment getInstance() {
+        if (instance == null) {
+            instance = new SearchFragment();
+        }
+        return instance;
+    }
+    private SearchFragment() {}
 }

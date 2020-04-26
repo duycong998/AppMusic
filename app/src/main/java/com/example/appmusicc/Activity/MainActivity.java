@@ -26,8 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
-        mainViewPagerAdapter.addFragment(new HomeFragment(),"Trang Chủ");
-        mainViewPagerAdapter.addFragment(new SearchFragment(),"Tìm Kiếm");
+        mainViewPagerAdapter.addFragment(HomeFragment.getInstance(),"Trang Chủ");
+        mainViewPagerAdapter.addFragment(SearchFragment.getInstance(),"Tìm Kiếm");
+
+//        mainViewPagerAdapter.addFragment(new HomeFragment(),"Trang Chủ");
+//        mainViewPagerAdapter.addFragment(new SearchFragment(),"Tìm Kiếm");
         viewPager.setAdapter(mainViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.icontrangchu);
