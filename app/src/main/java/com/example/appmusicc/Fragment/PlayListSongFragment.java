@@ -24,7 +24,7 @@ public class PlayListSongFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_playlistsong,container,false);
-        rcViewPlayNhac = view.findViewById(R.id.rcViewPlayNhac);
+        rcViewPlayNhac = view.findViewById(R.id.rcViewPlayMusic);
         if(PlayMusicActivity.arraySongg.size()  > 0){
             adapter = new PlayMusicAdapter(getActivity(), PlayMusicActivity.arraySongg);
             rcViewPlayNhac.setLayoutManager(new LinearLayoutManager(getActivity()));

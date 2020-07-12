@@ -2,9 +2,12 @@ package com.example.appmusicc.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,6 +72,7 @@ public class BannerFragment extends Fragment {
                         }
                         viewPager.setCurrentItem(currentItem,true);
                         handler.postDelayed(runnable,4000);
+                        actionAni();
                     }
                 };
                 handler.postDelayed(runnable,4000);
@@ -79,5 +83,14 @@ public class BannerFragment extends Fragment {
 
             }
         });
+
+
+
     }
+    private void actionAni(){
+        Animation animation = AnimationUtils.loadAnimation(getActivity(),R.anim.custom_ani_in);
+        viewPager.setAnimation(animation);
+        Log.d("aaa","ccc");
+    }
+
 }

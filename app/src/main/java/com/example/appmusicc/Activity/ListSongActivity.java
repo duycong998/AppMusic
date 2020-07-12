@@ -95,7 +95,7 @@ public class ListSongActivity extends AppCompatActivity {
 
     private void getDataAlbum(String idAlbum) {
         DataServiec data = APIService.getData();
-        Call<List<Song>> callBack = data.getDanhSachBHTheoAlbum(idAlbum);
+        Call<List<Song>> callBack = data.getListSongAlbum(idAlbum);
         callBack.enqueue(new Callback<List<Song>>() {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {

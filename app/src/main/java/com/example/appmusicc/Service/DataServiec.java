@@ -59,7 +59,7 @@ public interface DataServiec {
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<Song>> getDanhSachBHTheoAlbum(@Field("idAlbum") String idAlbum);
+    Call<List<Song>> getListSongAlbum(@Field("idAlbum") String idAlbum);
 
     @FormUrlEncoded
     @POST("updateluotthich.php")

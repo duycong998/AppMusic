@@ -63,22 +63,22 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                searchKeyBaiHat(query);
+//                searchKeySong(query);
 //                return true;
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchKeyBaiHat(newText);
+                searchKeySong(newText);
                 return true;
-//                return false;
+            //   return false;
             }
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void searchKeyBaiHat(String mKey){
+    private void searchKeySong(String mKey){
         DataServiec data = APIService.getData();
         Call<List<Song>> callBack = data.getSearchSong(mKey);
         callBack.enqueue(new Callback<List<Song>>() {
