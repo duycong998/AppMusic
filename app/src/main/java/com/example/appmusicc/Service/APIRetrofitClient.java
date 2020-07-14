@@ -1,5 +1,7 @@
 package com.example.appmusicc.Service;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -28,7 +30,7 @@ public class APIRetrofitClient {
                 .client(builder)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-
+        Log.d("aaa","ccc");
         return retrofit;
     }
 }
