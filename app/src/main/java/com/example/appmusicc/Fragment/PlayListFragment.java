@@ -20,8 +20,8 @@ import com.example.appmusicc.Activity.ListOfPlayListsActivity;
 import com.example.appmusicc.Adapter.PlaylistAdapter;
 import com.example.appmusicc.Model.PlayList;
 import com.example.appmusicc.R;
-import com.example.appmusicc.Service.APIService;
-import com.example.appmusicc.Service.DataServiec;
+import com.example.appmusicc.Retrofit.APIService;
+import com.example.appmusicc.Retrofit.DataServiec;
 
 import java.util.ArrayList;
 import java.util.List;

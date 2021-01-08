@@ -1,4 +1,4 @@
-package com.example.appmusicc.Service;
+package com.example.appmusicc.Retrofit;
 
 import com.example.appmusicc.Model.Album;
 import com.example.appmusicc.Model.Song;
