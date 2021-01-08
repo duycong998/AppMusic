@@ -23,8 +23,8 @@ import com.example.appmusicc.Model.Topic;
 import com.example.appmusicc.Model.Genre;
 import com.example.appmusicc.Model.DailyGenre;
 import com.example.appmusicc.R;
-import com.example.appmusicc.Service.APIService;
-import com.example.appmusicc.Service.DataServiec;
+import com.example.appmusicc.Retrofit.APIService;
+import com.example.appmusicc.Retrofit.DataServiec;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

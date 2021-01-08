@@ -17,8 +17,8 @@ import com.example.appmusicc.Activity.ListSongActivity;
 import com.example.appmusicc.Adapter.LoveSongAdapter;
 import com.example.appmusicc.Model.Song;
 import com.example.appmusicc.R;
-import com.example.appmusicc.Service.APIService;
-import com.example.appmusicc.Service.DataServiec;
+import com.example.appmusicc.Retrofit.APIService;
+import com.example.appmusicc.Retrofit.DataServiec;
 
 import java.util.ArrayList;
 import java.util.List;

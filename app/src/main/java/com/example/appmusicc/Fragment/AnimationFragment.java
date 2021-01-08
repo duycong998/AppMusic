@@ -34,7 +34,7 @@ public class AnimationFragment extends Fragment {
         objectAnimator.start();
         return view;
     }
-    public void playNhac(String hinhanh) {
-        Picasso.with(getActivity()).load(hinhanh).into(circleImageView);
+    public void getPictureSong(String mPicture) {
+        Picasso.with(getActivity()).load(mPicture).into(circleImageView);
     }
 }
