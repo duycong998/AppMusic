@@ -26,7 +26,7 @@ class PlayMusicService : Service() {
             stopForeground(true)
         } else {
             startForegroundService()
-            musicPlayer.run { playMusiccc((intent?.extras?.get("url").toString())) }
+            musicPlayer.run { playMusicService((intent?.extras?.get("url").toString())) }
             // musicPlayer.playMusicc(url = intent?.extras?.get("url") as String)
         }
         return START_REDELIVER_INTENT

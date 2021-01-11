@@ -65,6 +65,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         initView();
         init();
         eventClick();
+
     }
 
     private void eventClick() {
@@ -180,7 +181,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                         position = 0;
                     }
 
-                    playMusiccc(arraySongg.get(position).getLinkSong());
+                    playMusicService(arraySongg.get(position).getLinkSong());
                     if (getApplicationContext() != null) {
                         fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
                         getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
@@ -201,7 +202,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         });
 
         imgPre.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 if (arraySongg.size() > 0) {
@@ -227,9 +227,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                             }
                             position = i;
                         }
-//                        new playMp3().execute(arraySongg.get(position).getLinkSong());
-                        //     playMusicService.getMusicPlayer().playMusicc(arraySongg.get(position).getLinkSong());
-                        startMusicService();
+                        playMusicService(arraySongg.get(position).getLinkSong());
                         fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
                         getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
                         upDateTime();
@@ -266,7 +264,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void init() {
         setSupportActionBar(toolbarPlayMusic);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -328,7 +325,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         viewPagerPlayMusic = findViewById(R.id.viewpagerPlayNhac);
     }
 
-    public void playMusiccc(String s) {
+    public void playMusicService(String s) {
         PlayMp3Async playMp3Async = new PlayMp3Async();
         playMp3Async.execute(s);
     }
@@ -353,29 +350,38 @@ public class PlayMusicActivity extends AppCompatActivity {
                     public void onCompletion(MediaPlayer mp) {
                         mediaPlayer.stop();
                         mediaPlayer.reset();
-                        position++;
-                        if (position >= arraySongg.size()) {
-                            position = 0;
-                        }
-                        imgPlay.setImageResource(R.drawable.iconpause);
-                        if (repeat) {
-                            position = position == 0 ? 0 : position - 1;
-                        }
-                        if (random) {
-                            Random random = new Random();
-                            int i = random.nextInt(arraySongg.size());
-                            if (i == position) {
-                                position = i - 1;
+                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                position++;
+                                if (position >= arraySongg.size()) {
+                                    position = 0;
+                                }
+                                imgPlay.setImageResource(R.drawable.iconpause);
+                                if (repeat) {
+                                    if (position == 0) {
+                                        position = 0;
+                                    } else {
+                                        position--;
+                                    }
+                                }
+                                if (random) {
+                                    Random random = new Random();
+                                    int i = random.nextInt(arraySongg.size());
+                                    if (i == position) {
+                                        position = i - 1;
+                                    }
+                                    position = i;
+                                }
+                                skTime.setProgress(0);
+                                playMusicService(arraySongg.get(position).getLinkSong());
+                                try {
+                                    Thread.sleep(200);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            position = i;
-                        }
-                        skTime.setProgress(0);
-                        playMusiccc(arraySongg.get(position).getLinkSong());
-                        try {
-                            Thread.sleep(200);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        }, 200);
                     }
                 });
 
@@ -386,7 +392,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                         timeSong();
                         upDateTime();
                     }
-                }, 1000);
+                }, 200);
             } catch (IOException e) {
                 e.printStackTrace();
             }
