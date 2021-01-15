@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Random;
+
 public class Song implements Parcelable {
 
     @SerializedName("idSong")
@@ -109,5 +111,19 @@ public class Song implements Parcelable {
         dest.writeString(mSinger);
         dest.writeString(linkSong);
         dest.writeString(mLike);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Song song = (Song) o;
+        return idSong.equals(song.idSong) && nameSong.equals(song.nameSong) && linkSong.equals(song.linkSong);
+    }
+
+    @Override
+    public int hashCode() {
+        return idSong.length() + nameSong.length() + pictureSong.length() + mSinger.length() + linkSong.length() + mLike.length()
+                + new Random().nextInt();
     }
 }

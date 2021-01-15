@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,7 +30,6 @@ import com.example.appmusicc.Model.Song;
 import com.example.appmusicc.R;
 import com.example.appmusicc.Service.PlayMusicService;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
@@ -59,13 +57,18 @@ public class PlayMusicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playmusic);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);//kiemtra nhac
-        getDataFromIntent();
-        initView();
-        init();
-        eventClick();
-
+        try {
+            getDataFromIntent();
+            initView();
+            setupPlayMusicService();
+            init();
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);//kiemtra nhac
+            eventClick();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("######## error", e.getMessage().toString());
+        }
     }
 
     private void eventClick() {
@@ -174,19 +177,11 @@ public class PlayMusicActivity extends AppCompatActivity {
                         }
                         position = i;
                     }
-                    if (position > (arraySongg).size() - 1) {
+                    if (position < 0 || position >= arraySongg.size()) {
                         position = 0;
                     }
-                    if (position > arraySongg.size()) {
-                        position = 0;
-                    }
-
-                    playMusicService(arraySongg.get(position).getLinkSong());
-                    if (getApplicationContext() != null) {
-                        fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
-                        getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
-                        upDateTime();
-                    }
+                    Log.d("######", "1155");
+                    startMusic();
                 }
                 imgPre.setClickable(false);
                 imgNext.setClickable(false);
@@ -204,35 +199,20 @@ public class PlayMusicActivity extends AppCompatActivity {
         imgPre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (arraySongg.size() > 0) {
-                    if (mediaPlayer != null || mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                        mediaPlayer.release();
-                        mediaPlayer = null;
+                position--;
+                if (random) {
+                    Random random = new Random();
+                    int i = random.nextInt(arraySongg.size());
+                    if (i == position) {
+                        position = i - 1;
                     }
-                    if (position < (arraySongg.size())) {
-                        imgPlay.setImageResource(R.drawable.iconpause);
-                        position--;
-                        if (position < 0) {
-                            position = arraySongg.size() - 1;
-                        }
-                        if (repeat) {
-                            position += 1;
-                        }
-                        if (random) {
-                            Random random = new Random();
-                            int i = random.nextInt(arraySongg.size());
-                            if (i == position) {
-                                position = i - 1;
-                            }
-                            position = i;
-                        }
-                        playMusicService(arraySongg.get(position).getLinkSong());
-                        fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
-                        getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
-                        upDateTime();
-                    }
+                    position = i;
                 }
+                if (position < 0 || position >= arraySongg.size()) {
+                    position = 0;
+                }
+                startMusic();
+                Log.d("######", "22");
                 imgPre.setClickable(false);
                 imgNext.setClickable(false);
                 Handler handler1 = new Handler();
@@ -249,16 +229,18 @@ public class PlayMusicActivity extends AppCompatActivity {
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
-        arraySongg.clear();
         if (intent != null) {
             if (intent.hasExtra("playmusic")) {
                 Song song = intent.getParcelableExtra("playmusic");
-                arraySongg.add(song);
+                if (!arraySongg.contains(song))
+                    arraySongg.add(song);
             }
-
             if (intent.hasExtra("playallsong")) {
                 ArrayList<Song> arrayBH = intent.getParcelableArrayListExtra("playallsong");
-                arraySongg = arrayBH; //  2 này bằng nhau
+                for (Song song : arrayBH) {
+                    if (!arraySongg.contains(song))
+                        arraySongg.add(song);
+                }
             }
         }
 
@@ -282,12 +264,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         adapterMusic.addFragment(fragmentPlayListSong);
         adapterMusic.addFragment(fragmentAnimation);
         viewPagerPlayMusic.setAdapter(adapterMusic);
-        fragmentAnimation = (AnimationFragment) adapterMusic.getItem(1);
         if (arraySongg.size() > 0) {
             getSupportActionBar().setTitle(arraySongg.get(0).getNameSong());
-            Log.d("AAA", arraySongg.get(0).getLinkSong());
-//           musicMediaPlayer.playMusicc(arraySongg.get(0).getLinkSong());
-            //   MusicMediaPlayer.Companion.getInstance(this).playMusicc(arraySongg.get(0).getLinkSong());
             startMusicService();
             if (mediaPlayer != null) {
                 if (mediaPlayer.isPlaying()) {
@@ -299,11 +277,17 @@ public class PlayMusicActivity extends AppCompatActivity {
                     Log.d("AAAC", isCheck + "");
                 }
             }
-
-//            playMusicService.getMusicPlayer().playMusicc(arraySongg.get(0).getLinkSong());
-            //     new playMp3().execute(arraySongg.get(0).getLinkSong());
             imgPlay.setImageResource(R.drawable.iconpause);
         }
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
+                getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
+                timeSong();
+                upDateTime();
+            }
+        }, 500);
     }
 
     private void startMusicService() {
@@ -325,77 +309,83 @@ public class PlayMusicActivity extends AppCompatActivity {
         viewPagerPlayMusic = findViewById(R.id.viewpagerPlayNhac);
     }
 
-    public void playMusicService(String s) {
-        PlayMp3Async playMp3Async = new PlayMp3Async();
-        playMp3Async.execute(s);
+    public void startMusic() {
+        Log.d("######", "11");
+        try {
+            if (mediaPlayer != null) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                }
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(arraySongg.get(position).getLinkSong());
+                mediaPlayer.prepare();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    class PlayMp3Async extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            return strings[0];
-        }
-
-        @Override
-        protected void onPostExecute(String mSong) {
-            super.onPostExecute(mSong);
-            try {
-                mediaPlayer = new MediaPlayer();
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mediaPlayer.setDataSource(mSong);
-                mediaPlayer.prepare();
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {//tranh' loi~
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        mediaPlayer.stop();
-                        mediaPlayer.reset();
-                        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                position++;
-                                if (position >= arraySongg.size()) {
+    public void setupPlayMusicService() {
+        if (mediaPlayer == null) {
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mediaPlayer.start();
+                    fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
+                    getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
+                    timeSong();
+                }
+            });
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {//tranh' loi~
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("######", position + ">" + repeat + ">" + random);
+                            position++;
+                            if (position >= arraySongg.size()) {
+                                position = 0;
+                            }
+                            imgPlay.setImageResource(R.drawable.iconpause);
+                            if (repeat) {
+                                if (position == 0) {
                                     position = 0;
-                                }
-                                imgPlay.setImageResource(R.drawable.iconpause);
-                                if (repeat) {
-                                    if (position == 0) {
-                                        position = 0;
-                                    } else {
-                                        position--;
-                                    }
-                                }
-                                if (random) {
-                                    Random random = new Random();
-                                    int i = random.nextInt(arraySongg.size());
-                                    if (i == position) {
-                                        position = i - 1;
-                                    }
-                                    position = i;
-                                }
-                                skTime.setProgress(0);
-                                playMusicService(arraySongg.get(position).getLinkSong());
-                                try {
-                                    Thread.sleep(200);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                                } else {
+                                    position--;
                                 }
                             }
-                        }, 200);
-                    }
-                });
+                            if (random) {
+                                Random random = new Random();
+                                int i = random.nextInt(arraySongg.size());
+                                if (i == position) {
+                                    position = i - 1;
+                                }
+                                position = i;
+                            }
+                            skTime.setProgress(0);
+                            startMusic();
+                            Log.d("######", "223");
+                            try {
+                                Thread.sleep(200);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, 200);
+                }
+            });
 
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mediaPlayer.start();
-                        timeSong();
-                        upDateTime();
-                    }
-                }, 200);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.start();
+                    timeSong();
+                    upDateTime();
+                }
+            }, 200);
         }
     }
 

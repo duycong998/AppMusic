@@ -8,33 +8,40 @@ import android.content.Intent
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.eftimoff.viewpager.transformators.BuildConfig
-import com.example.appmusicc.Activity.MainActivity
 import com.example.appmusicc.Activity.PlayMusicActivity
 import com.example.appmusicc.R
 import kotlin.random.Random
 
 class PlayMusicService : Service() {
     val musicPlayer by lazy { PlayMusicActivity() }
+    var isStart = false
+
     override fun onBind(intent: Intent?): IBinder = LocalBinder()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == "STOP_FOREGROUND_REMOVE") {
             stopForeground(true)
+            isStart = false
         } else {
             startForegroundService()
-            musicPlayer.run { playMusicService((intent?.extras?.get("url").toString())) }
-            // musicPlayer.playMusicc(url = intent?.extras?.get("url") as String)
+            Log.d("######", "12")
+            if (!isStart) {
+                musicPlayer.run { startMusic() }
+            }
+            isStart = true
+            //musicPlayer.playMusicc(url = intent?.extras?.get("url") as String)
         }
         return START_REDELIVER_INTENT
     }
 
     private fun startForegroundService() {
         createNotificationChannel()
-        val notificationIntent = Intent(this, MainActivity::class.java)
+        val notificationIntent = Intent(this, PlayMusicActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
                 this,
                 REQUEST_CODE_PENDING_INTENT,
