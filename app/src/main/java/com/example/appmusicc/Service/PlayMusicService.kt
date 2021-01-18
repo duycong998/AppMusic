@@ -36,7 +36,7 @@ class PlayMusicService : Service() {
             isStart = true
             //musicPlayer.playMusicc(url = intent?.extras?.get("url") as String)
         }
-        return START_REDELIVER_INTENT
+        return START_STICKY
     }
 
     private fun startForegroundService() {
