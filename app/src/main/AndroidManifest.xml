@@ -14,19 +14,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.PlayMusicActivity"></activity>
-        <activity android:name=".Activity.ListAlbumActivity" />
-        <activity android:name=".Activity.ListGenreOfTopicActivity" />
-        <activity android:name=".Activity.ListTopicActivity" />
-        <activity android:name=".Activity.ListOfPlayListsActivity" />
-        <activity android:name=".Activity.ListSongActivity" />
-        <activity android:name=".Activity.MainActivity">
+        <activity
+            android:name=".Activity.PlayMusicActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activity.ListAlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ListGenreOfTopicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ListTopicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ListOfPlayListsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ListSongActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".Service.PlayMusicService"
             android:exported="false"

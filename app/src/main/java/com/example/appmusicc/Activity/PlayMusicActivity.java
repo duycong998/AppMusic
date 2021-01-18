@@ -47,7 +47,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     AnimationFragment fragmentAnimation;
     PlayListSongFragment fragmentPlayListSong;
     static MediaPlayer mediaPlayer;
-    int position = 0;
+    static int position = 0;
     boolean repeat = false;
     boolean random = false;
     boolean next = false;
@@ -69,6 +69,17 @@ public class PlayMusicActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.d("######## error", e.getMessage());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(PlayMusicActivity.this, PlayMusicService.class);
+        PlayMusicActivity.this.stopService(intent);
+        mediaPlayer.stop();
+        arraySongg.clear();
+        Log.d("AAAAAC", arraySongg.size() + "");
+        finish();
     }
 
     private void eventClick() {
@@ -291,16 +302,16 @@ public class PlayMusicActivity extends AppCompatActivity {
 
 //        MainActivity mainActivity = new MainActivity();
 //        if (mainActivity.isMyServiceRunning(PlayMusicActivity.class)) {
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
-                    getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
-                    timeSong();
-                    upDateTime();
-                }
-            }, 500);
-   //     }
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
+                getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
+                timeSong();
+                upDateTime();
+            }
+        }, 500);
+        //     }
     }
 
     private void startMusicService() {
