@@ -1,5 +1,17 @@
 package com.example.appmusicc.Activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,29 +19,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.ActivityManager;
-import android.app.Service;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-
 import com.example.appmusicc.Adapter.ListViewMainAdapter;
 import com.example.appmusicc.Adapter.MainViewPagerAdapter;
-import com.example.appmusicc.Fragment.SearchFragment;
+import com.example.appmusicc.Fragment.FavoriteFragment;
 import com.example.appmusicc.Fragment.HomeFragment;
+import com.example.appmusicc.Fragment.SearchFragment;
 import com.example.appmusicc.Model.Menu;
 import com.example.appmusicc.R;
-import com.example.appmusicc.Service.PlayMusicService;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -51,8 +47,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         init();
-        actionBar();
-        catchOnItemListView();
+        //actionBar();
+    //    catchOnItemListView();
+        Intent intent = getIntent();
+        if (intent.getAction().equals("IS_PLAY")) {
+            startActivity(new Intent(this, PlayMusicActivity.class));
+        }
     }
 
     @Override
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public  boolean isMyServiceRunning(Class<?> serviceClass) {
+    public boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
@@ -92,28 +92,29 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void catchOnItemListView() {
-        lsvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        drawerLayout.closeDrawers();
-                        break;
-                    case 1:
-                        Intent intent = new Intent(getApplicationContext(), ListAlbumActivity.class);
-                        startActivity(intent);
-                        drawerLayout.closeDrawers();
-                        break;
-                }
-            }
-        });
-    }
+//    private void catchOnItemListView() {
+//        lsvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                switch (position) {
+//                    case 0:
+//                        drawerLayout.closeDrawers();
+//                        break;
+//                    case 1:
+//                        Intent intent = new Intent(getApplicationContext(), ListAlbumActivity.class);
+//                        startActivity(intent);
+//                        drawerLayout.closeDrawers();
+//                        break;
+//                }
+//            }
+//        });
+//    }
 
     private void init() {
         MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         mainViewPagerAdapter.addFragment(HomeFragment.getInstance(), "Trang Chủ");
         mainViewPagerAdapter.addFragment(SearchFragment.getInstance(), "Tìm Kiếm");
+        mainViewPagerAdapter.addFragment(FavoriteFragment.Companion.newInstance(), "Yêu Thích");
 
 //        mainViewPagerAdapter.addFragment(new HomeFragment(),"Trang Chủ");
 //        mainViewPagerAdapter.addFragment(new SearchFragment(),"Tìm Kiếm");
@@ -121,36 +122,38 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.icontrangchu);
         tabLayout.getTabAt(1).setIcon(R.drawable.iconsearch);
+        tabLayout.getTabAt(2).setIcon(R.drawable.iconloved);
+        viewPager.setOffscreenPageLimit(3);
     }
-
-    private void actionBar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-    }
+//
+//    private void actionBar() {
+//        setSupportActionBar(toolbar);
+////        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+////        toolbar.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
+////        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                drawerLayout.openDrawer(GravityCompat.START);
+////            }
+////        });
+//    }
 
     private void initView() {
         tabLayout = findViewById(R.id.myTabLayout);
         viewPager = findViewById(R.id.myViewPager);
-        navigationView = findViewById(R.id.navigationViewMain);
-        lsvMain = findViewById(R.id.lsViewMain);
+        //navigationView = findViewById(R.id.navigationViewMain);
+       // lsvMain = findViewById(R.id.lsViewMain);
         drawerLayout = findViewById(R.id.drawerLayout);
-        toolbar = findViewById(R.id.toolbarMain);
+      //  toolbar = findViewById(R.id.toolbarMain);
 
-        arrayMenu = new ArrayList<>();
-        arrayMenu.add(new Menu("Trang Chủ", "https://laptopgiasi.vn/wp-content/uploads/2017/09/icon-trang-chu-laptopgiasi.vn_.png"));
-        arrayMenu.add(new Menu("Tìm Kiếm", "https://img.icons8.com/pastel-glyph/2x/search--v2.png"));
-        arrayMenu.add(new Menu("Liên Hệ", "https://buigiastore.com/wp-content/uploads/2020/03/unnamed.png"));
-        arrayMenu.add(new Menu("Thông Tin", "https://cdn1.iconfinder.com/data/icons/Pretty_office_icon_part_2/128/personal-information.png"));
-
-        adapter = new ListViewMainAdapter(this, arrayMenu);
-
-        lsvMain.setAdapter(adapter);
+//        arrayMenu = new ArrayList<>();
+//        arrayMenu.add(new Menu("Trang Chủ", "https://laptopgiasi.vn/wp-content/uploads/2017/09/icon-trang-chu-laptopgiasi.vn_.png"));
+//        arrayMenu.add(new Menu("Tìm Kiếm", "https://img.icons8.com/pastel-glyph/2x/search--v2.png"));
+//        arrayMenu.add(new Menu("Liên Hệ", "https://buigiastore.com/wp-content/uploads/2020/03/unnamed.png"));
+//        arrayMenu.add(new Menu("Thông Tin", "https://cdn1.iconfinder.com/data/icons/Pretty_office_icon_part_2/128/personal-information.png"));
+//
+//        adapter = new ListViewMainAdapter(this, arrayMenu);
+//
+//        lsvMain.setAdapter(adapter);
     }
 }

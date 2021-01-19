@@ -13,9 +13,8 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
     private ArrayList<String>   arrayTitle    = new ArrayList<>();
 
     public MainViewPagerAdapter(@NonNull FragmentManager fm) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
-
 
     @NonNull
     @Override
@@ -31,7 +30,6 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
     public  void addFragment(Fragment fragment , String title){
         arrayFragment.add(fragment);
         arrayTitle.add(title);
-
     }
 
     @Nullable

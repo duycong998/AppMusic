@@ -2,6 +2,7 @@ package com.example.appmusicc.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,13 @@ import com.example.appmusicc.Model.Song;
 import com.example.appmusicc.R;
 import com.example.appmusicc.Retrofit.APIService;
 import com.example.appmusicc.Retrofit.DataServiec;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +43,7 @@ public class LoveSongAdapter extends RecyclerView.Adapter<LoveSongAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_lovesong,parent,false);
+        View view = inflater.inflate(R.layout.item_lovesong, parent, false);
 
         return new ViewHolder(view);
     }
@@ -59,6 +64,20 @@ public class LoveSongAdapter extends RecyclerView.Adapter<LoveSongAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtName, txtSinger;
         ImageView imgPicture, imgLike;
+
+        public void saveData() {
+            SharedPreferences sharedPreferences = context.getSharedPreferences("myShare", Context.MODE_PRIVATE);
+            Gson gson = new Gson();
+            String json = sharedPreferences.getString("mySong", "[]");
+            Type type = TypeToken.getArray(Song.class).getType();
+            Song[] array = gson.fromJson(json, type);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Song[] newArray = Arrays.copyOf(array, array.length + 1);
+            newArray[array.length] = arraySong.get(getAdapterPosition());
+            editor.putString("mySong", gson.toJson(newArray));
+            editor.apply();
+        }
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtSinger = itemView.findViewById(R.id.txtNameSingerLike);
@@ -88,9 +107,10 @@ public class LoveSongAdapter extends RecyclerView.Adapter<LoveSongAdapter.ViewHo
                                 @Override
                                 public void onResponse(Call<String> call, Response<String> response) {
                                     String ketqua = response.body();
-                                    if(ketqua.equals("success")){
+                                    if (ketqua.equals("success")) {
+                                        saveData();
                                         Toast.makeText(context, "Đã Thích", Toast.LENGTH_SHORT).show();
-                                    }else {
+                                    } else {
                                         Toast.makeText(context, "Lỗi", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -103,7 +123,7 @@ public class LoveSongAdapter extends RecyclerView.Adapter<LoveSongAdapter.ViewHo
                             imgLike.setEnabled(false);
                         }
                     });
-                   // Toast.makeText(context, arrayBaiHat.get(getPosition()).getTenBaiHat() +"", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(context, arrayBaiHat.get(getPosition()).getTenBaiHat() +"", Toast.LENGTH_SHORT).show();
                 }
             });
         }

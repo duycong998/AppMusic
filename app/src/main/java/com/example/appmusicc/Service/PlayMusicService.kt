@@ -12,6 +12,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.eftimoff.viewpager.transformators.BuildConfig
+import com.example.appmusicc.Activity.MainActivity
 import com.example.appmusicc.Activity.PlayMusicActivity
 import com.example.appmusicc.R
 import kotlin.random.Random
@@ -41,7 +42,8 @@ class PlayMusicService : Service() {
 
     private fun startForegroundService() {
         createNotificationChannel()
-        val notificationIntent = Intent(this, PlayMusicActivity::class.java)
+        val notificationIntent = Intent(this, MainActivity::class.java)
+        notificationIntent.action = "IS_PLAY"
         val pendingIntent = PendingIntent.getActivity(
                 this,
                 REQUEST_CODE_PENDING_INTENT,

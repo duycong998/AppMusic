@@ -37,6 +37,8 @@ public class Song implements Parcelable {
         linkSong = in.readString();
         mLike = in.readString();
     }
+    public Song() {
+    }
 
     public static final Creator<Song> CREATOR = new Creator<Song>() {
         @Override

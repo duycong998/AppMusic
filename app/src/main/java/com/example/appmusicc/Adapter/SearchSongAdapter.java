@@ -27,11 +27,10 @@ import retrofit2.Response;
 
 public class SearchSongAdapter extends RecyclerView.Adapter<SearchSongAdapter.ViewHolder>{
     Context context;
-    ArrayList<Song> arrayBHSearch;
+    public ArrayList<Song> arrayBHSearch = new ArrayList<>();
 
-    public SearchSongAdapter(Context context, ArrayList<Song> arrayBHSearch) {
+    public SearchSongAdapter(Context context) {
         this.context = context;
-        this.arrayBHSearch = arrayBHSearch;
     }
 
     @NonNull

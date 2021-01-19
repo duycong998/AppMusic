@@ -86,7 +86,8 @@ public class SearchFragment extends Fragment {
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 ArrayList<Song> arrayBHSearch = (ArrayList<Song>) response.body();
                 if(arrayBHSearch.size()  > 0){
-                    adapter = new SearchSongAdapter(getActivity(),arrayBHSearch);
+                    adapter = new SearchSongAdapter(getActivity());
+                    adapter.arrayBHSearch = arrayBHSearch;
                     LinearLayoutManager  linearLayoutManager = new LinearLayoutManager(getActivity());
                     rcViewSearchBH.setLayoutManager(linearLayoutManager);
                     rcViewSearchBH.setAdapter(adapter);

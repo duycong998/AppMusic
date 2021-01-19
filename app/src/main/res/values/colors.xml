@@ -5,4 +5,18 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorToolbar">#F02</color>
 
+    <color name="colorGo">#59F3E8EC</color>
+    <color name="colorJannaGo">#61F4E6D3</color>
+    <color name="colorRed">#F5060B</color>
+    <color name="colorBlack">#59000000</color>
+    <color name="colorMerino">#F9F5F0</color>
+    <color name="colorSpringWood">#F8F5F1</color>
+    <color name="colorJanna">#F4E6D3</color>
+    <color name="colorEcruWhite">#F6F7ED</color>
+    <color name="colorPampas">#F4F0EC</color>
+    <color name="colorRiverBed">#47525E</color>
+    <color name="colorGrayChateau">#969FAA</color>
+    <color name="colorPink">#F3E8EC</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorButton">#51F9F5F0</color>
 </resources>

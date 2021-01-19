@@ -76,28 +76,17 @@ public class PlayMusicActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent intent = new Intent(PlayMusicActivity.this, PlayMusicService.class);
         PlayMusicActivity.this.stopService(intent);
-        mediaPlayer.stop();
-        arraySongg.clear();
         position = 0;
+        mediaPlayer.stop();
+        mediaPlayer.release();
+        mediaPlayer = null;
+        Log.d("AAAAA", position + "");
+        arraySongg.clear();
         Log.d("AAAAAC", arraySongg.size() + "");
         finish();
     }
 
     private void eventClick() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (adapterMusic.getItem(1) != null) {
-                    if (arraySongg.size() > 0) {
-                        fragmentAnimation.getPictureSong(arraySongg.get(0).getPictureSong());
-                        handler.removeCallbacks(this);
-                    } else {
-                        handler.postDelayed(this, 500);
-                    }
-                }
-            }
-        }, 500);
         imgPlay.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -283,13 +272,16 @@ public class PlayMusicActivity extends AppCompatActivity {
                 Intent intent = new Intent(PlayMusicActivity.this, PlayMusicService.class);
                 PlayMusicActivity.this.stopService(intent);
                 position = 0;
-                Log.d("AAAAA", position + "");
                 mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+                Log.d("AAAAA", position + "");
                 arraySongg.clear();
                 Log.d("AAAAAC", arraySongg.size() + "");
                 finish();
             }
         });
+
         toolbarPlayMusic.setTitleTextColor(Color.WHITE);
         fragmentAnimation = new AnimationFragment();
         fragmentPlayListSong = new PlayListSongFragment();
@@ -303,7 +295,7 @@ public class PlayMusicActivity extends AppCompatActivity {
             startMusicService();
             imgPlay.setImageResource(R.drawable.iconpause);
         }
-      //  fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
+        //  fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
 
 //        MainActivity mainActivity = new MainActivity();
 //        if (mainActivity.isMyServiceRunning(PlayMusicActivity.class)) {
