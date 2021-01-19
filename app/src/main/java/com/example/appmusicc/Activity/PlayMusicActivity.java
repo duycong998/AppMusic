@@ -78,6 +78,7 @@ public class PlayMusicActivity extends AppCompatActivity {
         PlayMusicActivity.this.stopService(intent);
         mediaPlayer.stop();
         arraySongg.clear();
+        position = 0;
         Log.d("AAAAAC", arraySongg.size() + "");
         finish();
     }
@@ -281,6 +282,8 @@ public class PlayMusicActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PlayMusicActivity.this, PlayMusicService.class);
                 PlayMusicActivity.this.stopService(intent);
+                position = 0;
+                Log.d("AAAAA", position + "");
                 mediaPlayer.stop();
                 arraySongg.clear();
                 Log.d("AAAAAC", arraySongg.size() + "");
@@ -295,13 +298,16 @@ public class PlayMusicActivity extends AppCompatActivity {
         adapterMusic.addFragment(fragmentAnimation);
         viewPagerPlayMusic.setAdapter(adapterMusic);
         if (arraySongg.size() > 0) {
-            getSupportActionBar().setTitle(arraySongg.get(0).getNameSong());
+            getSupportActionBar().setTitle(arraySongg.get(position).getNameSong());
+            Log.d("AAAAA", position + "");
             startMusicService();
             imgPlay.setImageResource(R.drawable.iconpause);
         }
+      //  fragmentAnimation.getPictureSong(arraySongg.get(position).getPictureSong());
 
 //        MainActivity mainActivity = new MainActivity();
 //        if (mainActivity.isMyServiceRunning(PlayMusicActivity.class)) {
+
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -311,6 +317,7 @@ public class PlayMusicActivity extends AppCompatActivity {
                 upDateTime();
             }
         }, 500);
+
         //     }
     }
 
